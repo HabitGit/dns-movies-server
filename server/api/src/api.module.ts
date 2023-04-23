@@ -3,6 +3,8 @@ import { UsersController } from './controllers/users.controller';
 import { ClientsModule } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices';
 import {PersonsController} from "./controllers/persons.controller";
+import { InitController } from './controllers/init.controller';
+import {MoviesController} from "./controllers/movies.controller";
 import { InitModule } from './init/init.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './filters/all.exceptions.filter';
@@ -25,6 +27,8 @@ import { AllExceptionsFilter } from './filters/all.exceptions.filter';
   controllers: [
       UsersController,
       PersonsController,
+      InitController,
+      MoviesController,
   ],
   providers: [
     // {
