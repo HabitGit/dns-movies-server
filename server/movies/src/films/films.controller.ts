@@ -1,7 +1,6 @@
-import {Controller, Get, Res} from '@nestjs/common';
+import {Controller} from '@nestjs/common';
 import {FilmsService} from "./films.service";
 import {MessagePattern, Payload} from "@nestjs/microservices";
-import { PaginateQueryInterface, PaginateQuery } from 'nestjs-sequelize-paginate';
 
 @Controller('films')
 export class FilmsController {

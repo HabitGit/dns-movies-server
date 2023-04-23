@@ -17,7 +17,16 @@ import {MoviesController} from "./controllers/movies.controller";
           queue: process.env.USERS_QUEUE,
           queueOptions: { durable: false },
         },
-      },  
+      },
+        {
+        name: 'MOVIES-SERVICE',
+        transport: Transport.RMQ,
+        options: {
+            urls: [process.env.CLOUDAMQP_URL],
+            queue: process.env.MOVIES_QUEUE,
+            queueOptions: { durable: false },
+        },
+      },
     ])
   ],
   controllers: [
