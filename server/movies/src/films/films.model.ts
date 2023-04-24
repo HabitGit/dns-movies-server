@@ -1,4 +1,16 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Budget } from '../budget/budget.model';
+import { Countries } from '../countries/countries.model';
+import { Genres } from '../genres/genres.model';
+import { BudgetFilms } from "../budget/budget.m2m.model";
+import { CountriesFilms } from "../countries/countries.m2m.model";
+import { GenresFilms } from "../genres/genres.m2m.model";
 
 @Table({ tableName: 'films' })
 export class Films extends Model<Films> {
@@ -81,4 +93,13 @@ export class Films extends Model<Films> {
 
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   shortFilm: boolean;
+
+  @BelongsToMany(() => Budget, () => BudgetFilms)
+  budget: [];
+
+  @BelongsToMany(() => Countries, () => CountriesFilms)
+  countries: [];
+
+  @BelongsToMany(() => Genres, () => GenresFilms)
+  genres: [];
 }

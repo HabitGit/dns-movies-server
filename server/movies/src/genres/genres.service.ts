@@ -10,13 +10,22 @@ export class GenresService {
     @InjectModel(GenresFilms) private genresFilmsRepository: typeof GenresFilms,
   ) {}
 
-  async getGenresByFilmId(kinopoiskId: number) {
-    return await this.genresFilmsRepository.findAll({
-      where: { kinopoiskFilmId: kinopoiskId },
-    });
-  }
+  // async getGenresByFilmId(kinopoiskId: number) {
+  //   return await this.genresFilmsRepository.findAll({
+  //     where: { kinopoiskFilmId: kinopoiskId },
+  //   });
+  // }
 
   async getCountryById(genreId: number) {
     return await this.genresRepository.findOne({ where: { id: genreId } });
+  }
+
+  async getFilmsIdByGenre(genre) {
+    const genreId = await this.genresRepository.findOne({
+      where: { genreNameRu: genre.genre },
+    });
+    return await this.genresFilmsRepository.findAll({
+      where: { genreId: genreId.id },
+    });
   }
 }

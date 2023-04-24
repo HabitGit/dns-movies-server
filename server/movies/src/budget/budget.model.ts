@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Films } from '../films/films.model';
+import { BudgetFilms } from "./budget.m2m.model";
 
 @Table({ tableName: 'budget' })
 export class Budget extends Model<Budget> {
@@ -24,4 +32,7 @@ export class Budget extends Model<Budget> {
 
   @Column({ type: DataType.STRING })
   symbol: string;
+
+  @BelongsToMany(() => Films, () => BudgetFilms)
+  films: [];
 }

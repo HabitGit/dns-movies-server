@@ -5,16 +5,21 @@ import { ClientProxy } from '@nestjs/microservices';
 export class MoviesController {
 
     constructor(
-        @Inject('MOVIES-SERVICE') private usersService: ClientProxy,
+        @Inject('MOVIES-SERVICE') private moviesService: ClientProxy,
     ) {}
 
     @Get()
     async getAllFilms(@Query() param) {
-        return this.usersService.send({ cmd : 'get-all-films' }, param);
+        return this.moviesService.send({ cmd : 'get-all-films' }, param);
     }
 
-    @Get('/:id')
+    @Get('/:id/about')
     async getFilmById(@Param() id: number) {
-        return this.usersService.send({ cmd : 'get-film-byId' }, id);
+        return this.moviesService.send({ cmd : 'get-film-byId' }, id);
+    }
+
+    @Get('/:genre')
+    async filerByGenre(@Param() genre: string) {
+        return this.moviesService.send({ cmd : 'get-films-byGenre' }, genre);
     }
 }

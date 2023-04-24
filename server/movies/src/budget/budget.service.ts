@@ -10,11 +10,11 @@ export class BudgetService {
     @InjectModel(Budget) private budgetRepository: typeof Budget,
   ) {}
 
-  async getBudgetByFilmId(kinopoiskId: number) {
-    return await this.budgetFilmsRepository.findAll({
-      where: { kinopoiskFilmId: kinopoiskId },
-    });
-  }
+  // async getBudgetByFilmId(kinopoiskId: number) {
+  //   return await this.budgetFilmsRepository.findAll({
+  //     where: { kinopoiskFilmId: kinopoiskId },
+  //   });
+  // }
 
   async getBudgetById(budgetId: number) {
     return await this.budgetRepository.findOne({ where: { id: budgetId } });
