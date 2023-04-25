@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { ApiModule } from './api.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
-  app.enableCors();
   app.setGlobalPrefix('api');
-  app.use(cookieParser())
+
+  const PORT = 3000;
 
   const config = new DocumentBuilder()
     .setTitle('Фильмы. Финальный проект')
@@ -18,8 +17,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);
 
-  const PORT = 3000;
-  await app.listen(PORT); // Внутри контейнера порт 3000 всегда
+
+
+  await app.listen(PORT, () => {
+    console.log(`Сервер запущен на внутреннем порту ${PORT}`);
+  }); // Внутри контейнера порт 3000 всегда
 }
 
 bootstrap();

@@ -1,16 +1,7 @@
-import { AddRoleDto, AddRoleDtoEmail, Role, User } from '@hotels2023nestjs/shared';
-import { Body, Controller, Get, Inject, Param, Post, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserPermission } from 'src/decorators/user-permission.decorator';
-import { AllExceptionsFilter } from 'src/filters/all.exceptions.filter';
-import { RoleAccess } from 'src/guards/roles.decorator';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { initRoles } from 'src/init/init.roles';
-import { DtoValidationPipe } from 'src/pipes/dto-validation.pipe';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-@UseFilters(AllExceptionsFilter)
-@ApiTags('Работа с пользователями')
 @Controller('users')
 export class UsersController {
 
@@ -18,11 +9,20 @@ export class UsersController {
       @Inject('USERS-SERVICE') private usersService: ClientProxy,
   ) {}
 
+  @Post()
+  async createUser(
+    @Body() dto: any
+  ) {
+    return this.usersService.send(
+      {
+        cmd: 'create-user',
+      },
+      dto,
+    )
+  }
 
-    @UseGuards(RolesGuard)
-    @RoleAccess({minRoleVal: initRoles.ADMIN.value, allowSelf: true})
-    @ApiOperation({ summary: 'Получение пользователя по email' })
-    @ApiResponse({ status: 200, type: User, description: 'Объект может получить только администратор (ADMIN и выше) или сам пользователь' })
+    // @RoleAccess({minRoleVal: initRoles.ADMIN.value, allowSelf: true})
+    // @UseGuards(RolesGuard)
     @Get('/:email')
     async getUserByEmail(
         @Param('email') email: string,
@@ -35,19 +35,17 @@ export class UsersController {
         )
     }
 
-    @UseGuards(RolesGuard)
-    @RoleAccess(initRoles.ADMIN.value)
-    @ApiOperation({ summary: 'Добавление роли пользователю' })
-    @ApiResponse({ status: 201, type: Role, description: 'Добавить роль может только пользователь не ниже ранга 10 (ADMIN), только роль с рангом меньшим, чем у него' })
+    // @RoleAccess(initRoles.ADMIN.value)
+    // @UseGuards(RolesGuard)
     @Post('/add_role')
     async addRole(
-        @Body(DtoValidationPipe) dto: AddRoleDtoEmail
+        @Body() addRoleDto: any
     ) {
         return this.usersService.send(
             {
-                cmd: 'add-role-to-user-by-email',
+                cmd: 'add-role-to-user',
             },
-            dto,
+            addRoleDto,
         )
     }
 }
