@@ -5,6 +5,9 @@ import { GenresModule } from './genres/genres.module';
 import { CountriesModule } from './countries/countries.module';
 import { BudgetModule } from './budget/budget.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { PersonsModule } from './persons/persons.module';
+import { ParserModule } from "./parser/parser.module";
+import { TrailersModule } from "./trailers/trailers.module";
 
 @Module({
   imports: [
@@ -20,19 +23,22 @@ import { ReviewsModule } from './reviews/reviews.module';
     // }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: 'postgres',
       port: 5432,
       username: 'postgres',
       password: 'postgres',
-      database: 'test',
+      database: 'movies',
       models: [],
       autoLoadModels: true,
     }),
     FilmsModule,
-    // GenresModule,
-    // CountriesModule,
-    // BudgetModule,
-    // ReviewsModule,
+    GenresModule,
+    CountriesModule,
+    BudgetModule,
+    ReviewsModule,
+    PersonsModule,
+    ParserModule,
+    TrailersModule,
   ],
   controllers: [],
   providers: [],

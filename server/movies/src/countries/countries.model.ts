@@ -6,7 +6,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Films } from '../films/films.model';
-import { CountriesFilms } from "./countries.m2m.model";
+import { CountriesFilms } from './countries.m2m.model';
 
 @Table({ tableName: 'countries' })
 export class Countries extends Model<Countries> {

@@ -1,16 +1,19 @@
 import {
   BelongsToMany,
   Column,
-  DataType,
+  DataType, HasMany,
   Model,
-  Table,
-} from 'sequelize-typescript';
+  Table
+} from "sequelize-typescript";
 import { Budget } from '../budget/budget.model';
 import { Countries } from '../countries/countries.model';
 import { Genres } from '../genres/genres.model';
-import { BudgetFilms } from "../budget/budget.m2m.model";
-import { CountriesFilms } from "../countries/countries.m2m.model";
-import { GenresFilms } from "../genres/genres.m2m.model";
+import { BudgetFilms } from '../budget/budget.m2m.model';
+import { CountriesFilms } from '../countries/countries.m2m.model';
+import { GenresFilms } from '../genres/genres.m2m.model';
+import { Trailers } from "../trailers/trailers.model";
+import { SimilarFilms } from "./films.similar.m2m.model";
+import { Similar } from "./films.similar.model";
 
 @Table({ tableName: 'films' })
 export class Films extends Model<Films> {
@@ -31,38 +34,38 @@ export class Films extends Model<Films> {
   @Column({ type: DataType.STRING })
   nameOriginal: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   posterUrl: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   posterUrlPreview: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   coverUrl: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   logoUrl: string;
 
-  @Column({ type: DataType.INTEGER })
-  reviewsCount: number;
+  @Column({ type: DataType.STRING })
+  reviewsCount: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingGoodReview: number;
+  @Column({ type: DataType.STRING })
+  ratingGoodReview: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingGoodReviewVoteCount: number;
+  @Column({ type: DataType.STRING })
+  ratingGoodReviewVoteCount: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingKinopoisk: number;
+  @Column({ type: DataType.STRING })
+  ratingKinopoisk: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingKinopoiskVoteCount: number;
+  @Column({ type: DataType.STRING })
+  ratingKinopoiskVoteCount: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingFilmCritics: number;
+  @Column({ type: DataType.STRING })
+  ratingFilmCritics: string;
 
-  @Column({ type: DataType.INTEGER })
-  ratingFilmCriticsVoteCount: number;
+  @Column({ type: DataType.STRING })
+  ratingFilmCriticsVoteCount: string;
 
   @Column({ type: DataType.INTEGER })
   year: number;
@@ -98,8 +101,14 @@ export class Films extends Model<Films> {
   budget: [];
 
   @BelongsToMany(() => Countries, () => CountriesFilms)
-  countries: [];
+  countries: Countries[];
 
   @BelongsToMany(() => Genres, () => GenresFilms)
   genres: [];
+
+  @BelongsToMany(() => Similar, () => SimilarFilms)
+  similar: [];
+
+  @HasMany(() => Trailers)
+  trailers: Trailers[];
 }

@@ -1,12 +1,12 @@
 import {
   BelongsToMany,
   Column,
-  DataType,
+  DataType, ForeignKey,
   Model,
-  Table,
-} from 'sequelize-typescript';
+  Table
+} from "sequelize-typescript";
 import { Films } from '../films/films.model';
-import { BudgetFilms } from "./budget.m2m.model";
+import { BudgetFilms } from './budget.m2m.model';
 
 @Table({ tableName: 'budget' })
 export class Budget extends Model<Budget> {
@@ -32,6 +32,10 @@ export class Budget extends Model<Budget> {
 
   @Column({ type: DataType.STRING })
   symbol: string;
+
+  @ForeignKey(() => Films)
+  @Column({ type: DataType.INTEGER })
+  filmId: number;
 
   @BelongsToMany(() => Films, () => BudgetFilms)
   films: [];

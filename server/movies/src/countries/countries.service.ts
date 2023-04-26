@@ -20,4 +20,12 @@ export class CountriesService {
   async getCountryById(countryId: number) {
     return await this.countriesRepository.findOne({ where: { id: countryId } });
   }
+
+  async createCountry(country) {
+    let isCountry = await this.countriesRepository.findOne({where: {countryNameRu: country.country} });
+    if ( !isCountry ) {
+      return await this.countriesRepository.create({countryNameRu: country.country});
+    }
+    return isCountry;
+  }
 }

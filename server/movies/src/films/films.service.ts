@@ -1,22 +1,35 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Films } from './films.model';
 import { CountriesService } from '../countries/countries.service';
 import { GenresService } from '../genres/genres.service';
 import { BudgetService } from '../budget/budget.service';
 import { ClientProxy } from '@nestjs/microservices';
-import { lastValueFrom } from 'rxjs';
 import { Op } from 'sequelize';
+import { CreateFilmDto } from './dto/create.film.dto';
+import { SimilarFilms } from "./films.similar.m2m.model";
+import { Similar } from "./films.similar.model";
 
 @Injectable()
 export class FilmsService {
   constructor(
     @Inject('MOVIES-SERVICE') private usersClient: ClientProxy,
     @InjectModel(Films) private filmsRepository: typeof Films,
+    @InjectModel(Similar) private similarFilmsRepository: typeof SimilarFilms,
     private countriesService: CountriesService,
     private genresService: GenresService,
     private budgetService: BudgetService,
   ) {}
+  async createFilm(film: CreateFilmDto) {
+    if ( !await this.filmsRepository.findOne({where: { kinopoiskId: film.kinopoiskId }}) ) {
+      return await this.filmsRepository.create(film);
+    }
+  }
+
+  async createSimilarFilms(similar) {
+    return await this.similarFilmsRepository.create(similar);
+  }
+
   async getAllFilms(params) {
     const { page, size, title } = params;
     const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -101,4 +114,23 @@ export class FilmsService {
   //   }
   //   return allFilmsByGenre;
   // }
+  async getTestFilm(id) {
+    return await this.filmsRepository.findOne({
+      include: { all: true },
+      where: { kinopoiskId: id }
+    })
+  };
+
+  async getFilmsByGenre(name) {
+    let array = [];
+    let genre = await this.genresService.getGenreByName(name);
+    let filmsId = await this.genresService.getFilmsIdByGenreId(genre.id);
+    for ( let item of filmsId ) {
+      array.push(await this.filmsRepository.findOne({
+        include: { all: true },
+        where: { id: item.filmId }
+      }))
+    }
+    return array;
+  }
 }

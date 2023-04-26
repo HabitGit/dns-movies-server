@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from "@nestjs/common";
 import { FilmsService } from './films.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
@@ -20,4 +20,9 @@ export class FilmsController {
   // async getFilmsByGenre(@Payload() genre) {
   //   return this.filmsService.getFilmsByGenre(genre);
   // }
+
+  @Get('/:name')
+  async getFilmsByGenre(@Param('name') name) {
+    return await this.filmsService.getFilmsByGenre(name);
+  }
 }

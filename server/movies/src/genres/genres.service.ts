@@ -28,4 +28,23 @@ export class GenresService {
       where: { genreId: genreId.id },
     });
   }
+
+  async createGenre(genre) {
+    let isGenre = await this.genresRepository.findOne({where: {genreNameRu: genre.genre} });
+    if ( !isGenre ) {
+      return this.genresRepository.create({genreNameRu: genre.genre});
+    }
+    return isGenre;
+  }
+
+  async getGenreByName(name) {
+    return await this.genresRepository.findOne({
+      include: { all: true },
+      where: {genreNameRu: name}
+    })
+  }
+
+  async getFilmsIdByGenreId(id) {
+    return await this.genresFilmsRepository.findAll({where: { genreId: id }});
+  }
 }

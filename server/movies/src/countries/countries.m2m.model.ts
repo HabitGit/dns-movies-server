@@ -1,6 +1,12 @@
-import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Films } from "../films/films.model";
-import { Countries } from "./countries.model";
+import {
+  Column,
+  DataType,
+  ForeignKey,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Films } from '../films/films.model';
+import { Countries } from './countries.model';
 
 @Table({ tableName: 'films_countries' })
 export class CountriesFilms extends Model<CountriesFilms> {

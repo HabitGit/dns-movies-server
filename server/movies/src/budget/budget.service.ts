@@ -19,4 +19,12 @@ export class BudgetService {
   async getBudgetById(budgetId: number) {
     return await this.budgetRepository.findOne({ where: { id: budgetId } });
   }
+
+  async createBudget(budget) {
+    let isBudget = await this.budgetRepository.findOne({where: {filmId: budget.id} });
+    if ( !isBudget ) {
+      return await this.budgetRepository.create(budget.budget);
+    }
+    return isBudget;
+  }
 }

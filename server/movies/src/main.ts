@@ -14,17 +14,14 @@ async function bootstrap() {
   //   },
   // });
 
-  const app = await NestFactory.createMicroservice(AppModule, {
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://localhost:5672'],
-      queue: 'movies_queue',
-      queueOptions: {
-        durable: false,
-      },
-    },
-  });
+  const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
 
-  await app.listen();
+  const PORT = 3000;
+
+  await app.listen(PORT, () => {
+    console.log(`Сервер запущен на внутреннем порту ${PORT}`);
+  }); // Внутри контейнера порт 3000 всегда
+
 }
 bootstrap();

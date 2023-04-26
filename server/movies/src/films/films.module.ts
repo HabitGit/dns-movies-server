@@ -7,6 +7,8 @@ import { CountriesModule } from '../countries/countries.module';
 import { GenresModule } from '../genres/genres.module';
 import { BudgetModule } from '../budget/budget.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { SimilarFilms } from "./films.similar.m2m.model";
+import { Similar } from "./films.similar.model";
 
 @Module({
   controllers: [FilmsController],
@@ -23,10 +25,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
-    SequelizeModule.forFeature([Films]),
+    SequelizeModule.forFeature([Films, Similar, SimilarFilms]),
     CountriesModule,
     GenresModule,
     BudgetModule,
   ],
+  exports: [
+    FilmsService,
+  ]
 })
 export class FilmsModule {}
