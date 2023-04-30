@@ -8,6 +8,7 @@ import { InitModule } from './init/init.module';
 import { AuthController } from './controllers/auth.controller';
 import {ApiController} from "./api.controller";
 import { RolesController } from './controllers/roles.controller';
+import { GoogleStrategy } from './controllers/google.strategy';
 
 @Module({
   imports: [
@@ -50,6 +51,6 @@ import { RolesController } from './controllers/roles.controller';
       RolesController,
       MoviesController,
   ],
-  providers: [],
+  providers: [GoogleStrategy],
 })
 export class ApiModule {}

@@ -5,10 +5,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TokensService } from 'src/tokens/tokens.service';
 import { TokensModule } from 'src/tokens/tokens.module';
 import { VkModule } from 'src/vk/vk.module';
+import { GoogleService } from 'src/google/google.service';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, GoogleService],
   imports: [TokensModule,
             forwardRef(() => VkModule),
             ClientsModule.register([
