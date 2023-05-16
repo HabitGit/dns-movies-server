@@ -39,7 +39,7 @@ export class VkService {
 
     return this.http
       .get(
-        `https://oauth.vk.com/access_token?client_id=${VKDATA.client_id}&client_secret=${VKDATA.client_secret}&redirect_uri=${host}${redirectLink}&code=${code}`,
+        `https://oauth.vk.com/access_token?client_id=${VKDATA.client_id}&client_secret=${VKDATA.client_secret}&redirect_uri=${host}&code=${code}`,
       )
       .toPromise();
   }
@@ -94,8 +94,9 @@ export class VkService {
         user_id: user.id,
         name: profileFromVk.first_name,
         lastName: profileFromVk.last_name,
-        avatarId: avatarId,
+        avatarId: avatarId.avatarId,
       };
+      console.log('VKSERVICE: ', profileData);
 
       const uuid = await firstValueFrom(
         this.socialService.send({ cmd: 'create-profile' }, profileData),
