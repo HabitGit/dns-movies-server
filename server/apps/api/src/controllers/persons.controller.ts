@@ -15,6 +15,7 @@ import { DtoValidationPipe } from '../pipes/dto-validation.pipe';
 import { PersonsAutosagestDto, PersonsQueryDto } from '@shared/dto';
 import { PersonByIdObjectInterface } from '@shared/interfaces';
 
+//тут тоже типы и респонс
 @UseFilters(AllExceptionsFilter)
 @ApiTags('Работа с персонами из фильмов')
 @Controller('persons')

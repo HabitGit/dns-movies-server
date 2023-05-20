@@ -26,6 +26,9 @@ export class MoviesCountriesController {
   constructor(@Inject('MOVIES-SERVICE') private moviesService: ClientProxy) {}
 
   @ApiOperation({ summary: 'Получение списка стран' })
+  // как недавно узнали в description response пишем "Запрос успешен" "Не удалось найти айди" итд итп
+  // можно добавить ApiResponse для ошибок
+  // в ApiResponse нет типа возвращаемого объекта
   @ApiResponse({ status: 200, description: 'Выводит список всех стран' })
   @Get('/countries')
   getAllCountries() {

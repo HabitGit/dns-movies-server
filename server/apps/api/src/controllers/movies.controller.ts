@@ -41,6 +41,7 @@ export class MoviesController {
     status: 200,
     description: 'Список фильмов по запросу',
   })
+  // то же что и в жанрах
   @Get()
   getAllFilms(@Query(DtoValidationPipe) param: MoviesQueryDto) {
     return this.moviesService.send({ cmd: 'get-all-films' }, param);

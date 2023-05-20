@@ -23,6 +23,7 @@ export class CountriesService {
     if (cache) {
       return cache;
     }
+    // загадочная коснтрукция
     return await this.countriesRepository
       .findOne({ where: { id: countryId } })
       .then(async (result) => {
@@ -39,6 +40,7 @@ export class CountriesService {
     if (cache) {
       return cache;
     }
+    // то же самое. ретёрн отрабатывает только один и функция после этого схлапывается
     return await this.countriesRepository
       .findAll({
         attributes: {
@@ -51,6 +53,7 @@ export class CountriesService {
       });
   }
 
+  // интерфейсы именуются ICountriesUpdate, country содержит country, непонятно что есть что
   async updateCountryById(country: CountriesUpdateInterface): Promise<any> {
     const countryDto: UpdateCountryDto = country.country;
     const currentCountry = await this.countriesRepository.findOne({
@@ -60,6 +63,7 @@ export class CountriesService {
     return currentCountry;
   }
 
+  //boolean вместо  строк, throw вместо return, два ретёрна
   async deleteCountryById(countryId: number) {
     return await this.countriesRepository
       .destroy({

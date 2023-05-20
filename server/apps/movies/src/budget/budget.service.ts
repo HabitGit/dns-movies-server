@@ -11,6 +11,7 @@ export class BudgetService {
     @InjectModel(Budget) private budgetRepository: typeof Budget,
   ) {}
 
+  // лучше не возвращать строки
   async deleteBudgetByFilmId(filmId) {
     const budgetsId: any = await this.budgetFilmsRepository.findAll({
       raw: true,

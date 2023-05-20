@@ -146,6 +146,9 @@ export class PersonsService {
     return { limit, offset };
   }
 
+  // не очень понятно, что на вход приходит. какой-то массив any, 
+  //и как он отреагирует на stringify тоже непонятно. 
+  //а если поменять местами элементы массива это один и тот же кэш получится или разный?
   async getFilmsIdByPersonId(personQuery: Array<any>) {
     const cache = await this.cacheManager.get(
       `getFilmsIdByPersonId${JSON.stringify(personQuery)}`,

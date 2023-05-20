@@ -40,6 +40,7 @@ export class FilmsService {
     const query = name ? { nameRu: { [Op.iLike]: `%${name}%` } } : null;
     const { limit, offset } = this.getPagination(page, size);
 
+    // двойной ретёрн
     return await this.filmsRepository
       .findAndCountAll({
         attributes: [
@@ -128,10 +129,13 @@ export class FilmsService {
         reviews,
       };
     } catch (err) {
+      // я бы не была так уверена, что не зарегистрированный айди это единственное, что здесь могло пойти не так
+      // я бы обращение к микросервисам обернула отдельно в трай-кетч. +return вместо throw 
       return new HttpException('Айди не зарегистрирован', HttpStatus.NOT_FOUND);
     }
   }
 
+  //опечатка в названии функции
   async getFilmsByFilers(params: MoviesFiltersQueryDto): Promise<any> {
     const cache = await this.cacheManager.get(
       `getFilmsByFilers${JSON.stringify(params)}`,
@@ -187,6 +191,7 @@ export class FilmsService {
         ? { [Op.and]: films, [Op.or]: filmsIdByPerson }
         : { [Op.and]: films };
 
+        //двойной ретёрн
     return await this.filmsRepository
       .findAndCountAll({
         attributes: [

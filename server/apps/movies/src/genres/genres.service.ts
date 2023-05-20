@@ -22,6 +22,7 @@ export class GenresService {
     if (cache) {
       return cache;
     }
+    // return new error and double return
     return await this.genresRepository
       .findOne({ where: { id: genreId } })
       .then(async (result) => {

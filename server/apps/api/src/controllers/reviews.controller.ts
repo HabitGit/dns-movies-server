@@ -45,6 +45,7 @@ export class ReviewsController {
 
   @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создание отзыва' })
+  // отсутствует код респонсов
   @ApiCreatedResponse({
     type: ReviewPublic,
     description:
@@ -108,6 +109,7 @@ export class ReviewsController {
     summary:
       'Получение дерева отзывов по id фильма (которое соответствует kinopoiskId в таблице фильмов) с опциональным ограничением на глубину',
   })
+  //АпиОк: описание "Успешный запрос", нет кодов респонсов
   @ApiOkResponse({
     type: [ReviewTreePublic],
     description:
@@ -162,6 +164,7 @@ export class ReviewsController {
   @ApiResponse({
     status: 204,
     description:
+    // я думаю, что вернуть булиан будет гораздо лучше
       'Не возвращает тело, только статус. Нельзя узнать удачно ли удаление, результат снаружи всегда одинаков даже при несуществующем reviewId',
   })
   @HttpCode(204)

@@ -31,6 +31,7 @@ export class RolesController {
 
   @UseGuards(RolesGuard)
   @RoleAccess(initRoles.ADMIN.value)
+  // подробное описание в summary а в description "запрос успешный"
   @ApiOperation({ summary: 'Создание новой роли' })
   @ApiResponse({
     status: 201,
